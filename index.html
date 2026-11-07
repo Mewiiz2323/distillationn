@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>นักสืบกลิ่นหอม | ห้องทดลองการกลั่นด้วยไอน้ำ ม.2</title>
+<style>
+:root{
+ --navy:#17365b;--blue:#2878c8;--cyan:#36b9c8;--teal:#1da58b;
+ --violet:#8065cf;--pink:#f07ca8;--orange:#f4a640;--yellow:#ffe08a;
+ --paper:#fff;--ink:#233c56;--muted:#647b91;--line:#dce8f1;
+ --bg:#f3f7ff;--shadow:0 12px 32px rgba(36,75,120,.10)
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,"Noto Sans Thai",sans-serif;color:var(--ink);line-height:1.7;background:
+ radial-gradient(circle at 8% 12%,#e4f7ff 0,transparent 26%),
+ radial-gradient(circle at 92% 22%,#fce8f1 0,transparent 24%),var(--bg)}
+header{color:white;text-align:center;padding:38px 18px 34px;background:linear-gradient(120deg,#2458a6,#387fd0 48%,#28a99e);position:relative;overflow:hidden}
+header:before,header:after{content:"";position:absolute;border-radius:50%;background:#ffffff18}
+header:before{width:240px;height:240px;left:-70px;top:-130px}
+header:after{width:300px;height:300px;right:-100px;bottom:-220px}
+.hero{position:relative;z-index:1;max-width:900px;margin:auto}
+.eyebrow{display:inline-block;background:#ffffff25;border:1px solid #ffffff55;padding:4px 13px;border-radius:99px;font-size:.88rem}
+h1{font-size:clamp(1.8rem,5vw,2.8rem);line-height:1.25;margin:12px 0 8px}
+header p{margin:0;color:#eefaff}
+main{max-width:1120px;margin:auto;padding:20px 16px 44px}
+section{background:var(--paper);border:1px solid #e6edf5;border-radius:22px;padding:clamp(17px,3vw,27px);margin:18px 0;box-shadow:var(--shadow)}
+h2{color:#245b9c;margin:0 0 12px;font-size:1.4rem}
+h3{color:#286d8d;margin:8px 0}
+p{margin:8px 0 13px}
+.lead{font-size:1.05rem}
+.tagrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.tag{border-radius:99px;padding:5px 12px;font-size:.9rem;font-weight:bold;background:#e9f4ff;color:#2865a6}
+.tag:nth-child(2){background:#e5faf4;color:#13836c}.tag:nth-child(3){background:#fff1e1;color:#a96512}
+.objectives{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.objective{padding:14px;border-radius:15px;background:linear-gradient(145deg,#f1f8ff,#f8f4ff);border:1px solid #e5ecfb}
+.objective b{display:block;color:#285d9b;margin-bottom:4px}
+.knowledge{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.kcard{border-radius:16px;padding:16px;background:linear-gradient(135deg,#f2f9ff,#f8f5ff);border:1px solid #e5ebfa}
+.kcard:nth-child(2){background:linear-gradient(135deg,#eafaf7,#f4fffd)}
+.kcard:nth-child(3){background:linear-gradient(135deg,#fff7e9,#fffdf7)}
+.kcard:nth-child(4){background:linear-gradient(135deg,#fff0f5,#fff9fb)}
+.kcard b{color:#285d9b}
+.callout{padding:13px 16px;border-left:5px solid var(--orange);border-radius:12px;background:#fff8e8;margin:14px 0}
+.callout.blue{border-color:var(--cyan);background:#effbff}
+.lab-controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:13px;background:#f3f8ff;border-radius:15px;margin:14px 0}
+input[type=range]{accent-color:var(--teal);width:min(330px,100%)}
+button{border:0;border-radius:12px;padding:10px 17px;background:linear-gradient(120deg,#2878c8,#27a6ae);color:white;font-weight:bold;font-family:inherit;cursor:pointer;box-shadow:0 5px 12px #2878c82b}
+button:hover{filter:brightness(1.06);transform:translateY(-1px)}
+button.secondary{background:#eaf1fa;color:#2b5c8d;box-shadow:none}
+button:focus,select:focus,.draggable:focus,.dropzone:focus{outline:3px solid #ffc95b;outline-offset:3px}
+.labgrid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(230px,.7fr);gap:16px;align-items:stretch}
+.diagram-wrap{border-radius:18px;overflow:hidden;border:1px solid #dceaf3;background:linear-gradient(180deg,#e9f8ff,#f9fcff)}
+svg{display:block;width:100%;height:auto}
+.statuspanel{border-radius:18px;background:linear-gradient(155deg,#effbff,#f2f0ff);padding:17px}
+.stat{padding:10px 0;border-bottom:1px solid #dce8f1}
+.stat:last-of-type{border:0}
+.statlabel{font-size:.9rem;color:var(--muted)}
+.big{font-size:1.6rem;font-weight:bold;color:#187e94}
+#state{font-weight:bold;color:#7254b9}
+#observation{font-size:.94rem}
+canvas{width:100%;height:230px;border:1px solid #dce8f1;border-radius:14px;background:#fff;display:block}
+.smallnote{font-size:.87rem;color:var(--muted)}
+.process{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
+.process article{padding:15px;border-radius:15px;background:#f2f8ff;border:1px solid #e2edf7}
+.process article:nth-child(2){background:#effbf8}.process article:nth-child(3){background:#fff8ed}.process article:nth-child(4){background:#fff1f6}
+.num{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#2e7ec1;color:#fff;font-weight:bold;margin-bottom:7px}
+.process article:nth-child(2) .num{background:#1da58b}.process article:nth-child(3) .num{background:#e49a32}.process article:nth-child(4) .num{background:#d76c9a}
+.gamehead{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.scorebadge{background:#fff2d7;color:#925c0c;padding:7px 13px;border-radius:99px;font-weight:bold}
+.instructions{background:#f1f8ff;border-radius:13px;padding:12px 15px;margin:12px 0}
+.wordbank{display:flex;flex-wrap:wrap;gap:10px;padding:15px;background:linear-gradient(120deg,#f2f8ff,#f8f3ff);border:2px dashed #c7d8ed;border-radius:16px;min-height:72px}
+.draggable{padding:9px 14px;border-radius:11px;color:#fff;font-weight:bold;cursor:grab;touch-action:pan-y;user-select:none;background:linear-gradient(120deg,#397ac4,#6b69c8);box-shadow:0 4px 9px #4a70b72b}
+.draggable:nth-child(3n+2){background:linear-gradient(120deg,#149b91,#3ab6a1)}
+.draggable:nth-child(3n){background:linear-gradient(120deg,#d77a46,#edaa52)}
+.draggable:active{cursor:grabbing}
+.draggable.used{opacity:.35;filter:grayscale(.8)}
+.matchlist{display:grid;gap:11px;margin:16px 0}
+.matchitem{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(170px,.9fr);gap:12px;align-items:center;padding:12px;border-radius:14px;background:#fbfdff;border:1px solid #e5edf5}
+.matchitem p{margin:0}
+.dropzone{min-height:48px;border:2px dashed #a9bfd5;border-radius:11px;background:#f4f8fc;padding:8px 10px;color:#75899b;text-align:center;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.dropzone.over{background:#e4f7f4;border-color:#1da58b}
+.dropzone.filled{border-style:solid;border-color:#8ebcae;background:#edfaf4;color:#1d6e59;font-weight:bold}
+.dropzone.correct{border-color:#2aab78;background:#e5faef}
+.dropzone.wrong{border-color:#e27a7a;background:#fff0f0}
+.game-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.feedback{font-weight:bold;margin-top:13px;min-height:28px}
+.good{color:#087c55}.bad{color:#b04444}
+.answerbox{background:#fff8e8;border:1px solid #f6dfac;border-radius:14px;padding:14px;margin-top:12px}
+.reflection li{margin:8px 0}
+footer{text-align:center;color:#6c8196;padding:10px 16px 28px}
+@media(max-width:760px){.labgrid{grid-template-columns:1fr}.objectives{grid-template-columns:1fr}.process{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.knowledge{grid-template-columns:1fr}.matchitem{grid-template-columns:1fr}.gamehead{align-items:flex-start}.process{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header><div class="hero">
+ <span class="eyebrow">SCIENCE LAB · มัธยมศึกษาปีที่ 2</span>
+ <h1>🧪 นักสืบกลิ่นหอม<br>การกลั่นด้วยไอน้ำ</h1>
+ <p>เรียนรู้หลักการ สังเกตการเปลี่ยนแปลง และพิชิตเกมจับคู่ในห้องทดลองเสมือนจริง</p>
+</div></header>
+<main>
+<section>
+ <h2>🎯 ภารกิจการเรียนรู้</h2>
+ <p class="lead">วันนี้เราจะสืบค้นว่าไอน้ำช่วยพาสารหอมออกจากพืชได้อย่างไร และเหตุใดเราจึงต้องทำให้ไอเย็นลงก่อนเก็บสารที่ได้</p>
+ <div class="objectives">
+  <div class="objective"><b>🔍 ทดลองและสังเกต</b>ติดตามการเกิดไอ การเคลื่อนที่ของไอ และการควบแน่นจากแบบจำลอง</div>
+  <div class="objective"><b>🧠 วิเคราะห์</b>เชื่อมโยงความร้อน อุณหภูมิ และการเปลี่ยนสถานะของสาร</div>
+  <div class="objective"><b>📝 อธิบาย</b>เรียงลำดับขั้นตอนและบอกหน้าที่ของอุปกรณ์แต่ละส่วนได้</div>
+ </div>
+ <div class="tagrow"><span class="tag">การแยกสาร</span><span class="tag">การเปลี่ยนสถานะ</span><span class="tag">น้ำมันหอมระเหย</span></div>
+</section>
+
+<section>
+ <h2>📚 เกร็ดความรู้ก่อนเข้าห้องทดลอง</h2>
+ <p>**การกลั่นด้วยไอน้ำ (Steam distillation)** เป็นวิธีแยกสารที่อาศัยไอน้ำพาสารที่ระเหยได้และมีความสามารถในการละลายน้ำต่ำออกจากวัตถุดิบ เช่น กลีบดอกไม้ ใบพืช หรือเปลือกผลไม้ จากนั้นทำให้ไอเย็นลงจนควบแน่นเป็นของเหลว</p>
+ <div class="knowledge">
+  <article class="kcard"><h3>💡 หลักการสำคัญ</h3><p>เมื่อให้ความร้อน น้ำเปลี่ยนเป็นไอน้ำ ไอน้ำสัมผัสวัตถุดิบและพาสารหอมที่ระเหยได้ไปด้วย ทำให้สารบางชนิดออกมากับไอได้โดยไม่ต้องให้ความร้อนแก่วัตถุดิบจนถึงจุดเดือดของสารนั้นเพียงลำพัง</p></article>
+  <article class="kcard"><h3>🌿 ใช้กับสารแบบใด?</h3><p>เหมาะกับสารที่ระเหยได้ด้วยไอน้ำ ไม่ค่อยละลายน้ำ และอาจเสื่อมสภาพเมื่อได้รับความร้อนสูงเป็นเวลานาน ตัวอย่างเช่น น้ำมันหอมระเหยจากพืชบางชนิด</p></article>
+  <article class="kcard"><h3>🧊 ทำไมต้องควบแน่น?</h3><p>ไอที่ออกจากขวดกลั่นจะผ่านเครื่องควบแน่น ซึ่งมีน้ำหล่อเย็นช่วยดึงความร้อนออก ไอจึงเปลี่ยนกลับเป็นของเหลว เรียกว่า <b>สารกลั่น</b></p></article>
+  <article class="kcard"><h3>🫙 ของเหลวที่เก็บได้</h3><p>สารกลั่นอาจมีน้ำและน้ำมันหอมระเหยรวมกัน หากของเหลวทั้งสองไม่ผสมเป็นเนื้อเดียวกัน อาจเห็นการแยกเป็นชั้นตามความหนาแน่นและการละลาย</p></article>
+ </div>
+ <div class="callout"><b>จำให้แม่น:</b> การกลั่นด้วยไอน้ำไม่ใช่การกรอง เพราะไม่ได้ใช้ตัวกรองดักของแข็ง แต่ใช้การระเหยไปกับไอน้ำและการควบแน่นเพื่อเก็บสาร</div>
+</section>
+
+<section>
+ <h2>🔬 ห้องทดลองเสมือนจริง</h2>
+ <p>สังเกตแผนภาพอุปกรณ์แบบจำลอง ซึ่งแสดงเครื่องกำเนิดไอน้ำ ขวดบรรจุวัตถุดิบ เครื่องควบแน่น และภาชนะรับสารกลั่น กดเริ่มเพื่อดูเส้นทางการเคลื่อนที่ของไอ</p>
+ <div class="lab-controls">
+  <label for="heat"><b>ระดับความร้อน</b> <span id="heatVal">50</span>%</label>
+  <input id="heat" type="range" min="0" max="100" value="50">
+  <button id="toggle">▶ เริ่มการจำลอง</button><button class="secondary" id="reset">↺ เริ่มใหม่</button>
+ </div>
+ <div class="labgrid">
+  <div class="diagram-wrap">
+   <svg viewBox="0 0 900 510" role="img" aria-label="แบบจำลองชุดกลั่นด้วยไอน้ำ มีหม้อต้มน้ำ ขวดใส่วัตถุดิบ เครื่องควบแน่น และภาชนะรับ">
+    <defs>
+     <linearGradient id="glassGrad" x1="0" x2="1"><stop stop-color="#fff" stop-opacity=".85"/><stop offset=".45" stop-color="#b9e7f2" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity=".8"/></linearGradient>
+     <linearGradient id="waterGrad" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#8be0f0"/><stop offset="1" stop-color="#36a9d1"/></linearGradient>
+     <linearGradient id="oilGrad"><stop stop-color="#ffd86b"/><stop offset="1" stop-color="#f3a92d"/></linearGradient>
+     <linearGradient id="flameGrad" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#ffe77d"/><stop offset="1" stop-color="#f07832"/></linearGradient>
+     <filter id="shadow"><feGaussianBlur stdDeviation="5"/></filter>
+    </defs>
+    <rect x="0" y="0" width="900" height="510" fill="#f4fbff"/>
+    <path d="M20 440 H880" stroke="#d3e7ef" stroke-width="3"/>
+    <!-- steam generator -->
+    <ellipse cx="105" cy="403" rx="65" ry="10" fill="#aacbd9" opacity=".35" filter="url(#shadow)"/>
+    <path d="M55 250 Q55 226 80 226 H130 Q155 226 155 250 L150 385 Q105 410 60 385Z" fill="url(#glassGrad)" stroke="#4f8299" stroke-width="4"/>
+    <path d="M62 330 Q105 320 148 330 L146 380 Q105 397 64 380Z" fill="url(#waterGrad)" opacity=".8"/>
+    <ellipse cx="105" cy="330" rx="43" ry="8" fill="#a7e8f4" opacity=".8"/>
+    <path d="M83 224 V205 H127 V224" fill="none" stroke="#4f8299" stroke-width="5"/>
+    <path d="M105 205 V174 H220 V210" fill="none" stroke="#4f8299" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M105 205 V174 H220 V210" fill="none" stroke="#a8e6f3" stroke-width="3"/>
+    <path d="M82 422 Q105 390 128 422 Q145 448 105 451 Q65 448 82 422Z" fill="url(#flameGrad)" id="flame"/>
+    <path d="M94 424 Q105 406 116 424 Q122 439 105 442 Q88 439 94 424Z" fill="#fff3a6"/>
+    <!-- plant flask -->
+    <path d="M210 205 H250 V238 L278 270 Q290 287 282 315 L267 374 Q260 394 240 394 H205 Q185 394 178 374 L163 315 Q155 287 169 270 L198 238 V205Z" fill="url(#glassGrad)" stroke="#4f8299" stroke-width="4"/>
+    <path d="M171 315 Q220 303 278 315 L265 371 Q260 386 241 386 H205 Q188 386 183 371Z" fill="#b7e7d0" opacity=".85"/>
+    <g fill="#3e9b72" stroke="#267c5b" stroke-width="2">
+     <path d="M193 337 Q180 309 204 303 Q222 309 208 338Z"/><path d="M225 344 Q223 311 250 315 Q262 331 232 350Z"/>
+     <path d="M210 368 Q202 340 228 338 Q244 351 218 373Z"/>
+    </g>
+    <path d="M205 205 V187 H250 V205" fill="none" stroke="#4f8299" stroke-width="5"/>
+    <path d="M228 187 V156 H333 V174" fill="none" stroke="#4f8299" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M228 187 V156 H333 V174" fill="none" stroke="#a8e6f3" stroke-width="3"/>
+    <!-- condenser outer jacket -->
+    <rect x="330" y="135" width="300" height="92" rx="42" fill="#d6f1fa" stroke="#3d8099" stroke-width="5"/>
+    <rect x="347" y="165" width="266" height="32" rx="15" fill="#fff" stroke="#80b9ca" stroke-width="2"/>
+    <path d="M348 146 Q380 128 405 145 T460 145 T515 145 T570 145 T612 145" stroke="#5bb8dc" stroke-width="7" fill="none" opacity=".8"/>
+    <path d="M348 216 Q380 234 405 216 T460 216 T515 216 T570 216 T612 216" stroke="#5bb8dc" stroke-width="7" fill="none" opacity=".8"/>
+    <!-- cooling water ports -->
+    <path d="M370 135 V98 H415" stroke="#329ac7" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <path d="M590 227 V265 H635" stroke="#329ac7" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <path d="M415 98 H430" stroke="#329ac7" stroke-width="4"/>
+    <path d="M635 265 H650" stroke="#329ac7" stroke-width="4"/>
+    <!-- vapor and condensate inner route -->
+    <path d="M333 174 H620" stroke="#d9a23e" stroke-width="7" stroke-dasharray="11 10" fill="none" id="vapour"/>
+    <path d="M630 180 H700 V295" stroke="#4f8299" stroke-width="9" fill="none" stroke-linecap="round"/>
+    <path d="M630 180 H700 V295" stroke="#e2b45a" stroke-width="3" fill="none" stroke-dasharray="7 9"/>
+    <!-- receiver -->
+    <path d="M670 296 H730 L724 406 Q700 424 676 406Z" fill="url(#glassGrad)" stroke="#4f8299" stroke-width="4"/>
+    <path d="M676 370 Q700 363 725 370 L722 403 Q700 416 678 403Z" fill="url(#waterGrad)" opacity=".8" id="receiverWater"/>
+    <path d="M676 370 Q700 363 725 370" stroke="#f4c04f" stroke-width="4" id="oilLayer"/>
+    <path d="M688 294 V280 H712 V294" fill="none" stroke="#4f8299" stroke-width="4"/>
+    <!-- moving vapor dots -->
+    <g id="vaporDots" opacity="0">
+      <circle cx="300" cy="156" r="7" fill="#f1b64e"><animate attributeName="cx" values="280;640" dur="3s" repeatCount="indefinite"/></circle>
+      <circle cx="300" cy="174" r="5" fill="#f1b64e"><animate attributeName="cx" values="280;640" dur="3.7s" repeatCount="indefinite"/></circle>
+      <circle cx="300" cy="192" r="6" fill="#f1b64e"><animate attributeName="cx" values="280;640" dur="4.2s" repeatCount="indefinite"/></circle>
+    </g>
+    <g font-family="Tahoma,sans-serif" font-size="17" font-weight="bold" fill="#234d6d">
+     <text x="42" y="30">หม้อต้มน้ำ</text><text x="166" y="455">ขวดบรรจุวัตถุดิบ</text>
+     <text x="385" y="285">เครื่องควบแน่น</text><text x="654" y="455">ภาชนะรับสารกลั่น</text>
+     <text x="430" y="78" fill="#2589b5">น้ำหล่อเย็นเข้า</text><text x="643" y="278" fill="#2589b5">น้ำหล่อเย็นออก</text>
+    </g>
+    <g font-family="Tahoma,sans-serif" font-size="14" fill="#8b671f">
+     <text x="30" y="480">ความร้อน</text><text x="277" y="130">ไอน้ำ + สารระเหย</text><text x="640" y="250">ของเหลวควบแน่น</text>
+    </g>
+   </svg>
+  </div>
+  <aside class="statuspanel">
+   <div class="stat"><div class="statlabel">อุณหภูมิแบบจำลอง</div><div class="big"><span id="temp">25</span> °C</div></div>
+   <div class="stat"><div class="statlabel">ปริมาณสารกลั่นสะสม</div><div class="big"><span id="amount">0.0</span> หน่วย</div></div>
+   <div class="stat"><div class="statlabel">สถานะการทดลอง</div><div id="state">รอเริ่มการจำลอง</div></div>
+   <p id="observation">ลองคาดการณ์ก่อนว่า เมื่อเพิ่มความร้อน อุณหภูมิจะเปลี่ยนแปลงอย่างไร</p>
+   <div class="callout blue"><b>ชวนสังเกต</b><br>มองหาเส้นประสีทองที่แทนไอ และส่วนสีฟ้าที่แทนน้ำหล่อเย็น</div>
+  </aside>
+ </div>
+ <p><b>📈 กราฟอุณหภูมิกับเวลา</b> <span class="smallnote">(ข้อมูลจำลองเพื่อการเรียนรู้ ไม่ใช่ค่าทดลองจริง)</span></p>
+ <canvas id="chart" width="900" height="250" aria-label="กราฟอุณหภูมิตามเวลา"></canvas>
+ <div class="lab-controls"><button class="secondary" id="analyze">💬 ดูแนวทางวิเคราะห์กราฟ</button></div>
+ <div id="analysis" class="callout blue" hidden>เมื่อเพิ่มระดับความร้อน อุณหภูมิในแบบจำลองจะเพิ่มขึ้น เมื่อระบบมีไอมากขึ้น ไอจะเคลื่อนผ่านขวดวัตถุดิบและเครื่องควบแน่น น้ำหล่อเย็นช่วยดึงความร้อนออก ทำให้ไอกลายเป็นของเหลวและสะสมในภาชนะรับ</div>
+</section>
+
+<section>
+ <h2>🧭 เส้นทางของไอน้ำ 4 ขั้นตอน</h2>
+ <div class="process">
+  <article><span class="num">1</span><h3>เกิดไอน้ำ</h3><p>ให้ความร้อนแก่น้ำในหม้อต้ม จนน้ำเปลี่ยนเป็นไอ</p></article>
+  <article><span class="num">2</span><h3>พาสารหอม</h3><p>ไอน้ำผ่านวัตถุดิบและพาสารที่ระเหยได้ออกมาด้วย</p></article>
+  <article><span class="num">3</span><h3>ทำให้เย็น</h3><p>ไอผ่านเครื่องควบแน่นและสูญเสียความร้อน</p></article>
+  <article><span class="num">4</span><h3>เก็บสารกลั่น</h3><p>ของเหลวไหลลงภาชนะรับ อาจเห็นการแยกชั้นของน้ำกับน้ำมัน</p></article>
+ </div>
+ <div class="callout"><b>ความปลอดภัย:</b> ภาพและการปรับค่าทั้งหมดเป็นแบบจำลองเท่านั้น ไม่ใช่คำแนะนำในการประกอบหรือใช้งานชุดกลั่นจริง การทดลองจริงต้องทำในห้องปฏิบัติการ ภายใต้การดูแลของครู ใช้อุปกรณ์ที่เหมาะสม และไม่ปิดกั้นทางระบายของระบบให้ความร้อน</div>
+</section>
+
+<section>
+ <div class="gamehead"><h2>🎮 เกมภารกิจจับคู่: เติมคำให้ครบ</h2><span class="scorebadge">ทั้งหมด 6 คะแนน</span></div>
+ <p>ลากคำศัพท์จากคลังคำด้านล่าง ไปวางในช่องว่างให้ตรงกับความหมาย หากใช้โทรศัพท์หรือแท็บเล็ต สามารถแตะคำศัพท์แล้วแตะช่องว่างเพื่อเติมได้เช่นกัน</p>
+ <div class="instructions">⭐ เป้าหมาย: เติมคำให้ถูกครบทั้ง 6 ข้อ แล้วกด “ตรวจคำตอบ” เพื่อรับคะแนนและดูเฉลย</div>
+ <h3>คลังคำศัพท์</h3>
+ <div id="wordbank" class="wordbank" aria-label="คลังคำศัพท์สำหรับลาก"></div>
+ <div id="matchlist" class="matchlist"></div>
+ <div class="game-actions"><button id="check">ตรวจคำตอบ ✓</button><button class="secondary" id="showAnswers">ดูเฉลย</button><button class="secondary" id="retry">🔄 สุ่มเล่นใหม่</button></div>
+ <div id="score" class="feedback" aria-live="polite"></div>
+ <div id="answers" class="answerbox" hidden></div>
+</section>
+
+<section>
+ <h2>🤔 คำถามชวนคิดหลังเรียน</h2>
+ <ol class="reflection">
+  <li>เครื่องควบแน่นมีหน้าที่สำคัญอย่างไร?</li>
+  <li>เหตุใดการกลั่นด้วยไอน้ำจึงเหมาะกับการแยกน้ำมันหอมระเหยจากพืชบางชนิด?</li>
+  <li>ถ้าของเหลวที่เก็บได้แยกเป็นสองชั้น นักเรียนคิดว่าแต่ละชั้นอาจเป็นสารใด?</li>
+ </ol>
+ <div class="callout blue"><b>สรุปท้ายบท:</b> การกลั่นด้วยไอน้ำอาศัยไอน้ำพาสารที่ระเหยได้ออกจากวัตถุดิบ แล้วทำให้ไอควบแน่นเป็นของเหลวเพื่อเก็บสารกลั่น</div>
+</section>
+</main>
+<footer>สื่อการเรียนรู้วิทยาศาสตร์ ม.2 · ห้องทดลองเสมือนเรื่องการกลั่นด้วยไอน้ำ</footer>
+<script>
+const heat=document.getElementById('heat'), heatVal=document.getElementById('heatVal');
+let running=false,tick=0,temp=25,amount=0,timer=null,data=[];
+const tempEl=document.getElementById('temp'),amountEl=document.getElementById('amount');
+const stateEl=document.getElementById('state'),obs=document.getElementById('observation');
+const canvas=document.getElementById('chart'),ctx=canvas.getContext('2d');
+function draw(){
+ const w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);
+ ctx.fillStyle='#617b91';ctx.font='14px Tahoma';ctx.fillText('อุณหภูมิ (°C)',12,17);
+ ctx.strokeStyle='#e4edf3';ctx.lineWidth=1;
+ for(let i=0;i<=5;i++){let y=28+i*38;ctx.beginPath();ctx.moveTo(55,y);ctx.lineTo(w-18,y);ctx.stroke();ctx.fillStyle='#617b91';ctx.fillText(String(150-i*25),17,y+5)}
+ ctx.strokeStyle='#2878c8';ctx.lineWidth=4;ctx.beginPath();
+ data.forEach((v,i)=>{let x=55+i*(w-78)/Math.max(60,data.length-1),y=218-(v-25)/125*190;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();
+ ctx.fillStyle='#617b91';ctx.fillText('เวลา →',w-75,h-8);
+}
+function update(){
+ const power=Number(heat.value)/100;
+ if(running){
+  tick++;temp=Math.min(150,25+tick*(.45+power*1.35));
+  if(temp>70&&power>.04)amount=Math.min(45,amount+power*.42);
+  data.push(temp);if(data.length>60)data.shift();
+  if(temp<70){stateEl.textContent='กำลังเพิ่มอุณหภูมิ';obs.textContent='สังเกตน้ำในหม้อต้มได้รับความร้อน อุณหภูมิแบบจำลองกำลังเพิ่มขึ้น'}
+  else if(power<.05){stateEl.textContent='ความร้อนต่ำ';obs.textContent='เมื่อให้ความร้อนน้อยลง การเกิดไอและปริมาณสารกลั่นจะเพิ่มช้าลง'}
+  else{stateEl.textContent='เกิดไอและควบแน่น';obs.textContent='ไอผสมเคลื่อนผ่านเครื่องควบแน่นและเปลี่ยนเป็นของเหลวในภาชนะรับ'}
+ }
+ tempEl.textContent=Math.round(temp);amountEl.textContent=amount.toFixed(1);
+ document.getElementById('vaporDots').setAttribute('opacity',running&&temp>55&&power>.03?1:0);
+ document.getElementById('vapour').setAttribute('stroke-dashoffset',String(-tick*3));
+ document.getElementById('receiverWater').setAttribute('d',`M676 ${Math.max(330,370-amount*.75)} Q700 ${Math.max(323,363-amount*.75)} 725 ${Math.max(330,370-amount*.75)} L722 403 Q700 416 678 403Z`);
+ document.getElementById('oilLayer').setAttribute('d',`M676 ${Math.max(330,370-amount*.75)} Q700 ${Math.max(323,363-amount*.75)} 725 ${Math.max(330,370-amount*.75)}`);
+ draw();
+}
+heat.addEventListener('input',()=>{heatVal.textContent=heat.value});
+document.getElementById('toggle').onclick=()=>{
+ running=!running;document.getElementById('toggle').textContent=running?'Ⅱ หยุดชั่วคราว':'▶ เริ่มการจำลอง';
+ if(running){stateEl.textContent='กำลังจำลอง';timer=setInterval(update,500)}else{clearInterval(timer);stateEl.textContent='หยุดชั่วคราว'}
+};
+document.getElementById('reset').onclick=()=>{
+ running=false;clearInterval(timer);tick=0;temp=25;amount=0;data=[];
+ document.getElementById('toggle').textContent='▶ เริ่มการจำลอง';stateEl.textContent='รอเริ่มการจำลอง';
+ obs.textContent='ลองคาดการณ์ก่อนว่า เมื่อเพิ่มความร้อน อุณหภูมิจะเปลี่ยนแปลงอย่างไร';update();
+};
+document.getElementById('analyze').onclick=()=>{const el=document.getElementById('analysis');el.hidden=!el.hidden};
+update();
+
+const pairs=[
+ {term:'ไอน้ำ',desc:'พาสารที่ระเหยได้ออกจากวัตถุดิบ'},
+ {term:'เครื่องควบแน่น',desc:'ทำให้ไอเย็นลงและเปลี่ยนเป็นของเหลว'},
+ {term:'การระเหย',desc:'การเปลี่ยนสถานะจากของเหลวเป็นแก๊ส'},
+ {term:'การควบแน่น',desc:'การเปลี่ยนสถานะจากแก๊สเป็นของเหลว'},
+ {term:'สารกลั่น',desc:'ของเหลวที่เก็บได้หลังไอควบแน่น'},
+ {term:'น้ำมันหอมระเหย',desc:'ตัวอย่างสารที่อาจแยกด้วยการกลั่นด้วยไอน้ำ'}
+];
+let selected=null,order=[];
+const bank=document.getElementById('wordbank'),list=document.getElementById('matchlist');
+function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function placeWord(word,zone){
+ if(!zone||!zone.classList.contains('dropzone'))return;
+ const previous=zone.dataset.word;
+ if(previous){const old=bank.querySelector(`[data-word="${previous}"]`);if(old)old.classList.remove('used')}
+ const chip=bank.querySelector(`[data-word="${word}"]`);
+ if(!chip||chip.classList.contains('used'))return;
+ zone.dataset.word=word;zone.textContent=word;zone.classList.add('filled');zone.classList.remove('correct','wrong');
+ chip.classList.add('used');selected=null;document.querySelectorAll('.draggable').forEach(x=>x.style.outline='');
+ document.getElementById('score').textContent='';document.getElementById('answers').hidden=true;
+}
+function buildGame(){
+ selected=null;bank.innerHTML='';list.innerHTML='';order=shuffle(pairs.map((p,i)=>i));
+ shuffle(pairs.map(p=>p.term)).forEach(term=>{
+  const chip=document.createElement('button');chip.type='button';chip.className='draggable';chip.draggable=true;chip.textContent=term;chip.dataset.word=term;
+  chip.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',term);e.dataTransfer.effectAllowed='move'});
+  chip.addEventListener('click',()=>{selected=term;document.querySelectorAll('.draggable').forEach(x=>x.style.outline=x===chip?'3px solid #ffc95b':'');});
+  bank.appendChild(chip);
+ });
+ order.forEach((pairIndex,i)=>{
+  const row=document.createElement('div');row.className='matchitem';
+  const text=document.createElement('p');text.innerHTML=`<b>${i+1}.</b> ${pairs[pairIndex].desc}`;
+  const zone=document.createElement('div');zone.className='dropzone';zone.tabIndex=0;zone.setAttribute('role','button');zone.setAttribute('aria-label','ช่องว่างข้อ '+(i+1));zone.textContent='ลากคำตอบมาวางที่นี่';zone.dataset.answer=pairs[pairIndex].term;
+  zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('over')});
+  zone.addEventListener('dragleave',()=>zone.classList.remove('over'));
+  zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('over');placeWord(e.dataTransfer.getData('text/plain'),zone)});
+  zone.addEventListener('click',()=>{if(selected)placeWord(selected,zone)});
+  zone.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&selected){e.preventDefault();placeWord(selected,zone)}});
+  row.append(text,zone);list.appendChild(row);
+ });
+ document.getElementById('score').textContent='';document.getElementById('answers').hidden=true;
+}
+document.getElementById('check').onclick=()=>{
+ const zones=[...document.querySelectorAll('.dropzone')];let score=0,filled=0;
+ zones.forEach(z=>{z.classList.remove('correct','wrong');if(z.dataset.word){filled++;if(z.dataset.word===z.dataset.answer){score++;z.classList.add('correct')}else z.classList.add('wrong')}});
+ const out=document.getElementById('score');
+ if(filled<6){out.className='feedback bad';out.textContent=`เติมแล้ว ${filled}/6 ช่อง — ยังมีช่องว่าง ลองให้ครบทุกข้อก่อนนะ`}
+ else{out.className='feedback '+(score===6?'good':'bad');out.textContent=`⭐ คะแนนของคุณ ${score}/6 ${score===6?'ยอดเยี่ยม! คุณเป็นนักสืบกลิ่นหอมตัวจริง':'ลองดูช่องที่มีกรอบสีแดง แล้วแก้ไขอีกครั้งได้เลย'}`}
+};
+document.getElementById('showAnswers').onclick=()=>{
+ const box=document.getElementById('answers');
+ box.innerHTML='<b>เฉลยพร้อมทบทวน</b><ol>'+pairs.map(p=>`<li><b>${p.term}</b> — ${p.desc}</li>`).join('')+'</ol>';
+ box.hidden=false;
+};
+document.getElementById('retry').onclick=buildGame;
+buildGame();
+</script>
+</body>
+</html>
